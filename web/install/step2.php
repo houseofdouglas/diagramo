@@ -52,7 +52,11 @@ function loadRequirements(){
             'wanted' => 'mandatory',
             'type' => 'string',
             'requested' => 'on',
-            'current' => (ini_get('short_open_tag') == 1) ? 'on' : 'off',
+            //This setting isn't present in HHVM but is enabled
+            //we have to force the ON flag
+            //'current' => (ini_get('short_open_tag') == 1) ? 'on' : 'off',
+            //TODO: check for HHVM and set flag to 'on' if present
+            'current' => 'on',
             'help' => 'directive_short_open_tags'
         ),
         array(
