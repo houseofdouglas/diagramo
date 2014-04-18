@@ -22,6 +22,14 @@ $extensions = get_loaded_extensions();
 function loadRequirements(){
     global $extensions;
     
+    //HHVM Check - not present as ini setting
+    $is_short_open_tag_enabled = false;
+    
+    if(in_array('hh',$extensions) || ini_get('short_open_tag'))
+    {
+        $is_short_open_tag_enabled = true;    
+    }
+    
     $requirements = array(
         array(
             'name' => 'PHP Version',
@@ -53,10 +61,7 @@ function loadRequirements(){
             'type' => 'string',
             'requested' => 'on',
             //This setting isn't present in HHVM but is enabled
-            //we have to force the ON flag
-            //'current' => (ini_get('short_open_tag') == 1) ? 'on' : 'off',
-            //TODO: check for HHVM and set flag to 'on' if present
-            'current' => 'on',
+            'current' => $is_short_open_tag_enabled ? 'on' : 'off',
             'help' => 'directive_short_open_tags'
         ),
         array(
